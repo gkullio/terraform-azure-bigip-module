@@ -100,16 +100,18 @@ module "bigip" {
   prefix                      = format("%s-1nic", var.prefix)
   resource_group_name         = azurerm_resource_group.rg.name
   f5_ssh_publickey            = azurerm_ssh_public_key.f5_key.public_key
-  az_key_vault_authentication = var.az_key_vault_authentication
-  azure_secret_rg             = var.az_key_vault_authentication ? azurerm_resource_group.keyvalrg.name : ""
-  azure_keyvault_name         = var.az_key_vault_authentication ? azurerm_key_vault.key_vault.name : ""
-  azure_keyvault_secret_name  = var.az_key_vault_authentication ? azurerm_key_vault_secret.adminsecret.name : ""
   mgmt_subnet_ids             = [{ "subnet_id" = data.azurerm_subnet.mgmt.id, "public_ip" = true, "private_ip_primary" = "" }]
   mgmt_securitygroup_ids      = [module.mgmt-network-security-group.network_security_group_id]
   availability_zone           = var.availability_zone
   availabilityZones_public_ip = var.availabilityZones_public_ip
 }
 
+resource "azurerm_key_vault_access_policy" "main" {
+  count        = var.az_keyvault_authentication ? 1 : 0
+  key_vault_id = data.azurerm_key_vault.main[0].id
+  tenant_id    = data.azurerm_subscription.main.tenant_id
+  object_id    = data.azurerm_user_assigned_identity.main[0].principal_id
+}
 
 resource "null_resource" "clusterDO" {
 
