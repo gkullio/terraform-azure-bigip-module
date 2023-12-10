@@ -1,15 +1,14 @@
 variable "prefix" {
   description = "Prefix for resources created by this module"
   type        = string
-  default     = "tf-azure-bigip"
+  default     = "Kulland-1nic"
 }
 
 variable "location" {}
 
 variable "cidr" {
-  description = "Azure VPC CIDR"
+  description = "Azure VNet CIDR"
   type        = string
-  default     = "10.2.0.0/16"
 }
 
 variable "availability_zone" {
@@ -59,4 +58,17 @@ variable "resourceOwner" {
 variable "resourceOwnerEmail" {
   type = string
   description = "Owner email of the resource"   
+}
+
+variable "image_name" {
+  type        = string
+  description = "F5 SKU (image) to deploy. Note: The disk size of the VM will be determined based on the option you select.  **Important**: If intending to provision multiple modules, ensure the appropriate value is selected, such as ****AllTwoBootLocations or AllOneBootLocation****."
+}
+variable "product" {
+  type        = string
+  description = "Azure BIG-IP VE Offer"
+}
+variable "bigip_version" {
+  type        = string
+  description = "BIG-IP Version"
 }
