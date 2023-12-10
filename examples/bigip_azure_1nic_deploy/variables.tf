@@ -31,3 +31,32 @@ variable "instance_count" {
   default     = 1
 }
 
+variable "client_id" {
+  type = string
+  description = "Azure Client ID"
+}
+
+variable "client_secret" {
+  type = string
+  description = "Azure Client Secret"
+}
+
+variable "tenant_id" {
+  type = string
+  description = "Azure Tenant ID"
+}
+
+variable "subscription_id" {
+  type = string
+  description = "Azure Subscription ID"
+}
+
+variable "resourceOwner" {
+  type = string
+  description = "Owner of the resource"  
+}
+
+variable "resourceOwnerEmail" {
+  type = string
+  description = "Owner email of the resource"   
+}

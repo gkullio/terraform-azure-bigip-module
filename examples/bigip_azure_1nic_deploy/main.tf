@@ -1,6 +1,10 @@
 provider "azurerm" {
   //  version = "~>2.0"
   features {}
+    client_id       = var.client_id
+    client_secret   = var.client_secret
+    tenant_id       = var.tenant_id
+    subscription_id = var.subscription_id
 }
 
 #
@@ -16,6 +20,10 @@ resource "random_id" "id" {
 resource "azurerm_resource_group" "rg" {
   name     = format("%s-rg-%s", var.prefix, random_id.id.hex)
   location = var.location
+  tags = {
+    owner = var.resourceOwner
+    email = var.resourceOwnerEmail
+  }
 }
 
 resource "azurerm_ssh_public_key" "f5_key" {
